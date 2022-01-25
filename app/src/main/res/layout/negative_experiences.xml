@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.FinalYearProject00.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.FinalYearProject00.AppWidgetContainer"
+    android:layout_margin="5dp"
+    android:backgroundTint="#82E182">
+
+    <TextView
+        android:id="@+id/NegativePageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Please add your negative experiences:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/NegativeExpNum01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NegativePageTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="114dp"
+        android:text="1."
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/NegativeExp01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/NegativeExpNum01"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="-14dp"
+        android:layout_toRightOf="@+id/NegativeExpNum01"
+        android:backgroundTint="#999999"
+        android:ems="13"
+        android:inputType="textPersonName"
+        android:minHeight="45dp"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/addNegativeExp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/NegativeExp01"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="93dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginRight="220dp"
+        android:backgroundTint="#FF6347"
+        android:text="+"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/removeNegativeExp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/NegativeExp01"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginRight="300dp"
+        android:backgroundTint="#FF6347"
+        android:text="-"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/submitNegativeExp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NegativeExp01"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="156dp"
+        android:layout_marginTop="144dp"
+        android:backgroundTint="#FF6347"
+        android:text="Submit"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>
