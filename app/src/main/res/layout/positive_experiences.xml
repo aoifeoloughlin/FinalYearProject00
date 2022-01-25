@@ -82,6 +82,7 @@
         android:layout_marginLeft="154dp"
         android:layout_marginTop="150dp"
         android:backgroundTint="#B2E6F9"
+        android:onClick="moveToHomePage"
         android:text="Submit"
         android:textColor="#FFFFFF" />
 

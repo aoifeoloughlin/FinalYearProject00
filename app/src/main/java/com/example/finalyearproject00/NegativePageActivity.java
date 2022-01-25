@@ -1,5 +1,7 @@
 package com.example.finalyearproject00;
 import com.example.finalyearproject00.databinding.ActivityMainBinding;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -23,5 +25,9 @@ public class NegativePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.negative_experiences);
+    }
+    public void moveToPosPage(View vN){
+        Intent intent = new Intent(NegativePageActivity.this, PositivePageActivity.class);
+        startActivity(intent);
     }
 }

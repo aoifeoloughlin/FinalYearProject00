@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:theme="@style/Theme.FinalYearProject00.AppWidgetContainer"
     android:layout_margin="5dp"
-    android:backgroundTint="#82E182">
+    android:backgroundTint="#D3D3D3">
 
     <TextView
         android:id="@+id/NegativePageTitle"
@@ -83,6 +83,7 @@
         android:layout_marginTop="144dp"
         android:backgroundTint="#FF6347"
         android:text="Submit"
+        android:onClick="moveToPosPage"
         android:textColor="#FFFFFF" />
 
 </RelativeLayout>
