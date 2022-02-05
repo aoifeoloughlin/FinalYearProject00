@@ -1,12 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.FinalYearProject00.AppWidget.Container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/Theme.FinalYearProject00.AppWidgetContainer"
-    android:layout_margin="5dp"
-    android:backgroundTint="#D3D3D3">
+   >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/Theme.FinalYearProject00.AppWidgetContainer"
+        android:layout_margin="5dp"
+        android:backgroundTint="#D3D3D3"
+        android:id="@+id/negRL">
 
     <TextView
         android:id="@+id/NegativePageTitle"
@@ -18,72 +23,91 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/NegativeExpNum01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/NegativePageTitle"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="114dp"
-        android:text="1."
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF" />
 
     <EditText
         android:id="@+id/NegativeExp01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/NegativeExpNum01"
-        android:layout_marginLeft="30dp"
-        android:layout_marginBottom="-14dp"
-        android:layout_toRightOf="@+id/NegativeExpNum01"
+        android:layout_alignBottom="@+id/NegativePageTitle"
+        android:layout_marginLeft="70dp"
+        android:layout_marginBottom="-140dp"
         android:backgroundTint="#999999"
         android:ems="13"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:minHeight="45dp"
         tools:ignore="SpeakableTextPresentCheck">
 
-        <requestFocus />
     </EditText>
 
-    <Button
-        android:id="@+id/addNegativeExp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/NegativeExp01"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="93dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginRight="220dp"
-        android:backgroundTint="#FF6347"
-        android:text="+"
-        android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/removeNegativeExp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/NegativeExp01"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginRight="300dp"
-        android:backgroundTint="#FF6347"
-        android:text="-"
-        android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/submitNegativeExp"
+    <LinearLayout
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll"
+        android:layout_below="@+id/NegativeExp01"
+        android:orientation="vertical"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginBottom="-14dp">
+    </LinearLayout>
+
+
+        <Button
+            android:id="@+id/addNegativeExp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/NegativeExp01"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="279dp"
+            android:layout_marginTop="-0dp"
+            android:layout_marginRight="220dp"
+            android:backgroundTint="#FF6347"
+            android:text="+"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/removeNegativeExp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/NegativeExp01"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="327dp"
+            android:layout_marginTop="-0dp"
+            android:layout_marginRight="300dp"
+            android:backgroundTint="#FF6347"
+            android:text="-"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+
+        <Button
+            android:id="@+id/submitNegativeExp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/NegativeExp01"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="171dp"
+            android:layout_marginTop="350dp"
+            android:backgroundTint="#FF6347"
+            android:onClick="moveToPosPage"
+            android:text="Submit"
+            android:textColor="#FFFFFF" />
+
+        <Button
+        android:id="@+id/goBackToHome"
+        android:layout_width="62dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/NegativeExp01"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="156dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="427dp"
         android:backgroundTint="#FF6347"
-        android:text="Submit"
-        android:onClick="moveToPosPage"
-        android:textColor="#FFFFFF" />
+        android:onClick="moveToHomePage"
+        android:shape="oval"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp" />
+        <!--android:drawableEnd="@drawable/icon_right_aero_black"-->
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>
