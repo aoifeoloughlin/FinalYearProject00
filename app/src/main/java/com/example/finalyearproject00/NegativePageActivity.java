@@ -42,19 +42,25 @@ public class NegativePageActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.negative_experiences);
-        final Button addTextBox = findViewById(R.id.addNegativeExp);
-        LinearLayout mLayout = (LinearLayout) findViewById(R.id.ll);
-        EditText mEditText = (EditText) findViewById(R.id.NegativeExp01);
-        TextView textView = new TextView(this);
-        mEditText.setText("addClick");
+        Button addTextBox = findViewById(R.id.addNegativeExp);
+        Button removeTextBox = findViewById(R.id.removeNegativeExp);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.ll);
+        EditText textBox = (EditText) findViewById(R.id.NegativeExp01);
         addClick = 0;
         addTextBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                addClick++;
-                if(addClick <= 4) {
-                    mLayout.addView(createNewTextView(mEditText.getText().toString()));
-                }else{
-                    System.out.println("too many clicks");
+                if(addClick <= 3) {
+                    addClick++;
+                    layout.addView(createNewNegExp(textBox.getText().toString()));
+                }
+            }
+        });
+
+        removeTextBox.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if(addClick <= 4 && addClick >=1){
+                    addClick--;
+                    layout.removeViewAt(layout.getChildCount()-1);
                 }
             }
         });
@@ -67,13 +73,12 @@ public class NegativePageActivity extends AppCompatActivity {
             Intent intent = new Intent(NegativePageActivity.this, MainActivity.class);
             startActivity(intent);
         }
-        private EditText createNewTextView (String text){
-            final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+        private EditText createNewNegExp (String text){
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            final EditText textView = new EditText(this);
-            final TextView numberN = new TextView(this);
+            EditText textView = new EditText(this);
             textView.setLayoutParams(lparams);
-            textView.setText("New text: " + text);
+            textView.setText("Negative Experience Input");
             return textView;
         }
 

@@ -18,26 +18,15 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/positiveExpNum01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/PositivePageTitle"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="114dp"
-        android:text="1."
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF" />
+
 
     <EditText
         android:id="@+id/positiveExp01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/positiveExpNum01"
-        android:layout_marginLeft="30dp"
-        android:layout_marginBottom="-14dp"
-        android:layout_toRightOf="@+id/positiveExpNum01"
+        android:layout_alignBottom="@+id/PositivePageTitle"
+        android:layout_marginLeft="70dp"
+        android:layout_marginBottom="-140dp"
         android:backgroundTint="#999999"
         android:ems="13"
         android:inputType="textPersonName"
@@ -49,12 +38,12 @@
 
     <Button
         android:id="@+id/addPositiveExp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/positiveExp01"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="93dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginLeft="279dp"
+        android:layout_marginTop="-0dp"
         android:layout_marginRight="220dp"
         android:backgroundTint="#B2E6F9"
         android:text="+"
@@ -62,12 +51,12 @@
 
     <Button
         android:id="@+id/removePositiveExp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/positiveExp01"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginLeft="327dp"
+        android:layout_marginTop="-0dp"
         android:layout_marginRight="300dp"
         android:backgroundTint="#B2E6F9"
         android:text="-"
