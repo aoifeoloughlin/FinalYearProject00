@@ -1,39 +1,18 @@
 package com.example.finalyearproject00;
-
-import com.example.finalyearproject00.databinding.ActivityMainBinding;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.renderscript.ScriptGroup;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoClient;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.ConnectionString;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
-import java.util.ArrayList;
+import com.mongodb.client.MongoDatabase;
 
 public class NegativePageActivity extends AppCompatActivity {
 
@@ -44,6 +23,7 @@ public class NegativePageActivity extends AppCompatActivity {
         setContentView(R.layout.negative_experiences);
         Button addTextBox = findViewById(R.id.addNegativeExp);
         Button removeTextBox = findViewById(R.id.removeNegativeExp);
+        Button submitDB = findViewById(R.id.submitNegativeExp);
         LinearLayout layout = (LinearLayout) findViewById(R.id.ll);
         EditText textBox = (EditText) findViewById(R.id.NegativeExp01);
         addClick = 0;
@@ -64,6 +44,12 @@ public class NegativePageActivity extends AppCompatActivity {
                 }
             }
         });
+
+        submitDB.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+             connectToDB();
+            }
+        });
     }
         public void moveToPosPage (View vN){
             Intent intent = new Intent(NegativePageActivity.this, PositivePageActivity.class);
@@ -80,6 +66,34 @@ public class NegativePageActivity extends AppCompatActivity {
             textView.setLayoutParams(lparams);
             textView.setText("Negative Experience Input");
             return textView;
+        }
+
+        public void connectToDB(){
+
+            MongoClientURI connectionString = new MongoClientURI("mongodb+srv://oloughlinaoife1:gardenPicnic123!@finalyear.aeozg.mongodb.net");
+
+
+            MongoDatabase database = connectionString.getDatabase();
+
+
+           /* MongoDatabase database = mongoClient.getDatabase("test");
+            MongoDatabase db = client.getDatabase("gratitudeApp");
+            MongoCollection<Document> mongoCollection = db.getCollection("User");
+
+            Document newUser = new Document("firstName", "Emer")
+                    .append("lastName", "Mullen")
+                    .append("email", "emer@simplesolution.dev")
+                    .append("phone", "1234567891");
+
+                try {
+                    mongoCollection.insertOne(newUser);
+
+                    System.out.println("Success! Inserted document id: ");
+                } catch (MongoException me) {
+                    System.err.println("Unable to insert due to an error: " + me);
+                }
+
+            client.close();*/
         }
 
     }

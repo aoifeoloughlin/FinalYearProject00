@@ -4,23 +4,12 @@
     package="com.example.finalyearproject00">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalYearProject00">
-     <!--   <receiver
-            android:name=".PositiveExpereinces"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/positive_expereinces_info" />
-        </receiver>-->
 
         <activity
             android:name=".MainActivity"
@@ -41,6 +30,7 @@
             android:name=".NegativePageActivity"
             android:label="@string/app_name">
         </activity>
+
 
     </application>
 
