@@ -14,6 +14,8 @@ import com.android.volley.toolbox.Volley;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ConnectionString;
 
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +24,26 @@ import android.widget.LinearLayout;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.bson.Document;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class NegativePageActivity extends AppCompatActivity {
 
@@ -30,6 +51,14 @@ public class NegativePageActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+        }
         setContentView(R.layout.negative_experiences);
         Button addTextBox = findViewById(R.id.addNegativeExp);
         Button removeTextBox = findViewById(R.id.removeNegativeExp);
@@ -57,7 +86,7 @@ public class NegativePageActivity extends AppCompatActivity {
 
         submitDB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                connectToDB();
+                connectToDB(textBox.getText().toString());
             }
         });
     }
@@ -81,19 +110,32 @@ public class NegativePageActivity extends AppCompatActivity {
         return textView;
     }
 
-    public void connectToDB() {
+    public void connectToDB(String textBox) {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost("http://localhost:3001/newPosExp");
+            UrlEncodedFormEntity form;
+            try {
+                Date now = getCurrentTime();
 
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("posExperience",textBox));
+                nameValuePairs.add(new BasicNameValuePair("datePosted",now.toString()));
 
-            /*MongoClientURI client = new MongoClientURI("mongodb+srv://oloughlinaoife1:gardenPicnic123!@finalyear.aeozg.mongodb.net");
-            MongoClient mongoClient = MongoClients.create(uri)
-            MongoDatabase mongoDatabase = client.getDatabase("gratitudeApp");
-            MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("User");
-            Document newCustomer = new Document("firstName", "Emer")
-                    .append("lastName", "Mullen")
-                    .append("email", "emer@simplesolution.dev")
-                    .append("phone", "1234567891");
-            mongoCollection.insertOne(newCustomer);*/
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+                HttpResponse response = httpclient.execute(httppost);
+
+                Log.i("HTTP Post", "Response from server node = " + response.getStatusLine().getReasonPhrase() + "  Code = " + response.getStatusLine().getStatusCode());
+            } catch (ClientProtocolException e) {
+                Log.e("HTTP Post", "Protocol error = " + e.toString());
+            } catch (IOException e) {
+                Log.e("HTTP Post", "IO error = " + e.toString());
+            }
+    }
+
+    public Date getCurrentTime() {
+        Date timeStamp = Calendar.getInstance().getTime();
+       return timeStamp;
     }
 
 }

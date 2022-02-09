@@ -5,6 +5,8 @@ plugins {
 android {
     compileSdk 31
 
+    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "com.example.finalyearproject00"
         minSdk 21
