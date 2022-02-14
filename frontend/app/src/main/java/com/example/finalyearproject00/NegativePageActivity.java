@@ -87,14 +87,12 @@ public class NegativePageActivity extends AppCompatActivity {
         submitDB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 connectToDB(textBox.getText().toString());
+                Intent intent = new Intent(NegativePageActivity.this, PositivePageActivity.class);
+                startActivity(intent);
             }
         });
     }
 
-    public void moveToPosPage(View vN) {
-        Intent intent = new Intent(NegativePageActivity.this, PositivePageActivity.class);
-        startActivity(intent);
-    }
 
     public void moveToHomePage(View v) {
         Intent intent = new Intent(NegativePageActivity.this, MainActivity.class);
@@ -112,13 +110,13 @@ public class NegativePageActivity extends AppCompatActivity {
 
     public void connectToDB(String textBox) {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://localhost:3001/newPosExp");
+            HttpPost httppost = new HttpPost("http://10.0.2.2:3001/newNegExp");
             UrlEncodedFormEntity form;
             try {
                 Date now = getCurrentTime();
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                nameValuePairs.add(new BasicNameValuePair("posExperience",textBox));
+                nameValuePairs.add(new BasicNameValuePair("negExperience",textBox));
                 nameValuePairs.add(new BasicNameValuePair("datePosted",now.toString()));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
