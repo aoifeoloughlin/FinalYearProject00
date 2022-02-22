@@ -43,7 +43,7 @@ public class PositivePageActivity extends AppCompatActivity {
         EditText textBox = (EditText) findViewById(R.id.positiveExp01);
         Button addPTextBox = findViewById(R.id.addPositiveExp);
         Button removePTextBox = findViewById(R.id.removePositiveExp);
-        LinearLayout layoutP = (LinearLayout) findViewById(R.id.ll);
+        LinearLayout layoutP = (LinearLayout) findViewById(R.id.pll);
         EditText textBoxP = (EditText) findViewById(R.id.positiveExp01);
         addClick = 0;
         addPTextBox.setOnClickListener(new View.OnClickListener() {
