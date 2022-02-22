@@ -31,9 +31,9 @@
         android:layout_alignBottom="@+id/NegativePageTitle"
         android:layout_marginLeft="70dp"
         android:layout_marginBottom="-145dp"
+        android:inputType="textAutoCorrect"
         android:textColor="@color/black"
         android:text="Negative Experience Input"
-        android:inputType="text"
         android:minHeight="45dp"
         tools:ignore="SpeakableTextPresentCheck">
 
