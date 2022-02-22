@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:theme="@style/Theme.FinalYearProject00.AppWidgetContainer"
         android:layout_margin="5dp"
-        android:backgroundTint="#82E182"
+        android:backgroundTint="#FFFFFF"
         android:id="@+id/posRL">
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"
         android:text="Please add your positive experiences:"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FFFFFF" />
+        android:textColor="#8FA998" />
 
 
 
@@ -58,7 +58,7 @@
         android:layout_marginLeft="279dp"
         android:layout_marginTop="-0dp"
         android:layout_marginRight="220dp"
-        android:backgroundTint="#B2E6F9"
+        android:backgroundTint="#8FA998"
         android:text="+"
         android:textColor="#FFFFFF" />
 
@@ -71,7 +71,7 @@
         android:layout_marginLeft="327dp"
         android:layout_marginTop="-0dp"
         android:layout_marginRight="300dp"
-        android:backgroundTint="#B2E6F9"
+        android:backgroundTint="#8FA998"
         android:text="-"
         android:textColor="#FFFFFF" />
 
@@ -83,7 +83,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="160dp"
         android:layout_marginTop="350dp"
-        android:backgroundTint="#B2E6F9"
+        android:backgroundTint="#8FA998"
         android:text="Submit"
         android:textColor="#FFFFFF" />
 
@@ -95,7 +95,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="26dp"
             android:layout_marginTop="427dp"
-            android:backgroundTint="#B2E6F9"
+            android:backgroundTint="#8FA998"
             android:onClick="moveToHomePage"
             android:shape="oval"
             android:textColor="#FFFFFF"

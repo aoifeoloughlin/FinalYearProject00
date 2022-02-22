@@ -36,7 +36,7 @@
         android:layout_width="162dp"
         android:layout_height="117dp"
         android:layout_marginBottom="120dp"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="#8FA998"
         android:onClick="moveToPosPage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
