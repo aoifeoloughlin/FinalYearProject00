@@ -94,18 +94,18 @@
             android:textColor="#FFFFFF" />
 
         <Button
-        android:id="@+id/goBackToHome"
-        android:layout_width="62dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/NegativeExp01"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="427dp"
-        android:backgroundTint="#FF6347"
-        android:onClick="moveToHomePage"
-        android:shape="oval"
-        android:textColor="#FFFFFF"
-        android:textSize="18dp" />
+            android:id="@+id/goBackToHome"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/NegativeExp01"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="427dp"
+            android:backgroundTint="#FF6347"
+            android:onClick="moveToHomePage"
+            android:shape="oval"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
         <!--android:drawableEnd="@drawable/icon_right_aero_black"-->
 
     </RelativeLayout>

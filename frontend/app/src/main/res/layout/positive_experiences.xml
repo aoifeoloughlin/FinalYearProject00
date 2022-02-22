@@ -86,5 +86,19 @@
         android:backgroundTint="#B2E6F9"
         android:text="Submit"
         android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/goBackToHome"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/positiveExp01"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="427dp"
+            android:backgroundTint="#B2E6F9"
+            android:onClick="moveToHomePage"
+            android:shape="oval"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
     </RelativeLayout>
 </layout>

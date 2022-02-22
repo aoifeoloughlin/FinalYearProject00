@@ -103,6 +103,10 @@ public class PositivePageActivity extends AppCompatActivity {
         return timeStamp;
     }
 
+    public void moveToHomePage(View v) {
+        Intent intent = new Intent(PositivePageActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
     private EditText createNewPosExp (String text){
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
