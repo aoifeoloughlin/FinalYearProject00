@@ -102,7 +102,6 @@ public class NegativePageActivity extends AppCompatActivity {
         });
     }
 
-
     public void moveToHomePage(View v) {
         Intent intent = new Intent(NegativePageActivity.this, MainActivity.class);
         startActivity(intent);
@@ -156,5 +155,4 @@ public class NegativePageActivity extends AppCompatActivity {
         dropdown.setLayoutParams(lparams);
         return dropdown;
     }
-
 }

@@ -75,14 +75,21 @@ public class PositivePageActivity extends AppCompatActivity {
 
         submitDB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                connectToDB(textBox.getText().toString());
+                for(int i = 0; i<layoutP.getChildCount(); i++){
+                    if(i == 0){
+                        connectToDB(textBox.getText().toString(), dropdown.getSelectedItem().toString());
+                    }
+                    EditText childExp = (EditText) layoutP.getChildAt(i);
+                    Spinner childWeight = (Spinner) layoutDropdown.getChildAt(i);
+                    connectToDB(childExp.getText().toString(), childWeight.getSelectedItem().toString());
+                }
                 Intent intent = new Intent(PositivePageActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    public void connectToDB(String textBox) {
+    public void connectToDB(String textBox, String weight) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost("http://10.0.2.2:3001/newPosExp");
         UrlEncodedFormEntity form;
@@ -92,6 +99,7 @@ public class PositivePageActivity extends AppCompatActivity {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("posExperience",textBox));
             nameValuePairs.add(new BasicNameValuePair("datePosted",now.toString()));
+            nameValuePairs.add(new BasicNameValuePair("weight", weight));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

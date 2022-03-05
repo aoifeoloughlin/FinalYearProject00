@@ -7,6 +7,9 @@ const posexpSchema = new Schema({
     },
     datePosted: {
         type: Date
+    },
+    weight:{
+        type: Number
     }
 });
 
