@@ -17,9 +17,11 @@ import com.mongodb.ConnectionString;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -66,11 +68,17 @@ public class NegativePageActivity extends AppCompatActivity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.ll);
         EditText textBox = (EditText) findViewById(R.id.NegativeExp01);
         addClick = 0;
+        Spinner dropdown = findViewById(R.id.spinner);
+        String[] items = new String[]{"1", "2", "3", "4", "5"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+        LinearLayout layoutDropdown = (LinearLayout) findViewById(R.id.dropdownLayout);
         addTextBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (addClick <= 3) {
                     addClick++;
                     layout.addView(createNewNegExp(textBox.getText().toString()));
+                    layoutDropdown.addView(createDropdown());
                 }
             }
         });
@@ -80,6 +88,7 @@ public class NegativePageActivity extends AppCompatActivity {
                 if (addClick <= 4 && addClick >= 1) {
                     addClick--;
                     layout.removeViewAt(layout.getChildCount() - 1);
+                    layoutDropdown.removeViewAt(layoutDropdown.getChildCount()-1);
                 }
             }
         });
@@ -134,6 +143,18 @@ public class NegativePageActivity extends AppCompatActivity {
     public Date getCurrentTime() {
         Date timeStamp = Calendar.getInstance().getTime();
        return timeStamp;
+    }
+
+    private Spinner createDropdown(){
+        Spinner dropdown = new Spinner(this);
+        String[] items = new String[]{"1", "2", "3", "4", "5"};
+        ArrayAdapter<String> spin = new ArrayAdapter<>(NegativePageActivity.this, android.R.layout.simple_spinner_dropdown_item,
+                items);
+        dropdown.setAdapter(spin);
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        dropdown.setLayoutParams(lparams);
+        return dropdown;
     }
 
 }
