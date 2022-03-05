@@ -95,7 +95,14 @@ public class NegativePageActivity extends AppCompatActivity {
 
         submitDB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                connectToDB(textBox.getText().toString());
+                for(int i = 0; i<layout.getChildCount(); i++){
+                    if(i == 0){
+                        connectToDB(textBox.getText().toString(), dropdown.getSelectedItem().toString());
+                    }
+                    EditText childExp = (EditText) layout.getChildAt(i);
+                    Spinner childWeight = (Spinner) layoutDropdown.getChildAt(i);
+                    connectToDB(childExp.getText().toString(), childWeight.getSelectedItem().toString());
+                }
                 Intent intent = new Intent(NegativePageActivity.this, PositivePageActivity.class);
                 startActivity(intent);
             }
@@ -116,7 +123,7 @@ public class NegativePageActivity extends AppCompatActivity {
         return textView;
     }
 
-    public void connectToDB(String textBox) {
+    public void connectToDB(String textBox, String weight) {
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost("http://10.0.2.2:3001/newNegExp");
             UrlEncodedFormEntity form;
@@ -126,6 +133,7 @@ public class NegativePageActivity extends AppCompatActivity {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
                 nameValuePairs.add(new BasicNameValuePair("negExperience",textBox));
                 nameValuePairs.add(new BasicNameValuePair("datePosted",now.toString()));
+                nameValuePairs.add(new BasicNameValuePair("weight", weight));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
