@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,7 +45,12 @@ public class PositivePageActivity extends AppCompatActivity {
         EditText textBox = (EditText) findViewById(R.id.positiveExp01);
         Button addPTextBox = findViewById(R.id.addPositiveExp);
         Button removePTextBox = findViewById(R.id.removePositiveExp);
+        Spinner dropdown = findViewById(R.id.spinner1);
+        String[] items = new String[]{"1", "2", "3", "4", "5"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
         LinearLayout layoutP = (LinearLayout) findViewById(R.id.pll);
+        LinearLayout layoutDropdown = (LinearLayout) findViewById(R.id.dropdownLayout);
         EditText textBoxP = (EditText) findViewById(R.id.positiveExp01);
         addClick = 0;
         addPTextBox.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +58,7 @@ public class PositivePageActivity extends AppCompatActivity {
                 if(addClick <= 3) {
                     addClick++;
                     layoutP.addView(createNewPosExp(textBoxP.getText().toString()));
+                    layoutDropdown.addView(createDropdown());
                 }
             }
         });
@@ -60,6 +68,7 @@ public class PositivePageActivity extends AppCompatActivity {
                 if(addClick <= 4 && addClick >=1){
                     addClick--;
                     layoutP.removeViewAt(layoutP.getChildCount()-1);
+                    layoutDropdown.removeViewAt(layoutDropdown.getChildCount()-1);
                 }
             }
         });
@@ -107,12 +116,25 @@ public class PositivePageActivity extends AppCompatActivity {
         Intent intent = new Intent(PositivePageActivity.this, MainActivity.class);
         startActivity(intent);
     }
-    private EditText createNewPosExp (String text){
+    private EditText createNewPosExp(String text){
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         EditText textView = new EditText(this);
         textView.setLayoutParams(lparams);
         textView.setText("Positive Experience Input");
+
         return textView;
+    }
+
+    private Spinner createDropdown(){
+        Spinner dropdown = new Spinner(this);
+        String[] items = new String[]{"1", "2", "3", "4", "5"};
+        ArrayAdapter<String> spin = new ArrayAdapter<>(PositivePageActivity.this, android.R.layout.simple_spinner_dropdown_item,
+                items);
+        dropdown.setAdapter(spin);
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        dropdown.setLayoutParams(lparams);
+        return dropdown;
     }
 }
