@@ -10,7 +10,16 @@ const usersSchema = new Schema({
     },
     dateOfBirth: {
         type: Date
+    },
+    positiveExpSet:{
+        type: Array
+    },
+    negativeExpSet:{
+        type: Array
+    },
+    ratioScore:{
+        type: String
     }
 });
 
-module.exports = mongoose.model('Users', usersSchema);
+module.exports = mongoose.model('UsersModel', usersSchema);

@@ -10,6 +10,9 @@ const negexpSchema = new Schema({
     },
     weight:{
         type: Number
+    }, 
+    userId:{
+        type: String
     }
 });
 

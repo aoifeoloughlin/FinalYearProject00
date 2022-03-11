@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const PosExpModel = require('../models/posexp');
-
+const UsersModel = require('../models/usersModel');
 const NegExpModel = require('../models/negexp');
 
 /* GET home page. */
@@ -22,10 +22,9 @@ router.post('/login', function(req, res, next) {
 
 router.get('/posExp', function(req,res){
   // get data from mongodb and pass it to the view
-  let posexp = new PosExpModel();
-  posexp.find({}, function(err, data){
+  PosExpModel.find({}, function (err,data) {
     if (err) throw err;
-    res.render('positiveExperince', {experiences: data});
+    res.json(data);
   });
 });
 
@@ -41,10 +40,9 @@ router.post('/newPosExp', function(req,res){
 
 router.get('/negExp', function(req,res){
   // get data from mongodb and pass it to the view
-  let negexp = new NegExpModel();
-  negexp.find({}, function(err, data){
+  NegExpModel.find({}, function(err, data){
     if (err) throw err;
-    res.render('negativeExperince', {experiences: data});
+    res.json(data);
   });
 });
 
@@ -72,5 +70,20 @@ router.post('/newUser', function(req,res){
     res.json(data);
   });
 });
+
+
+//GET user's set of positive ids
+// 1. Get with USER id set of positive ids
+// 2. for all the pos exp in the set get the pos objects with the positive ids
+router.get('/getUsersData', function(req,res){
+  // get data from mongodb and pass it to the view
+  uId = "622bdc4137fa6365a1bbcfd6"
+  UsersModel.find({_id: uId}, function(err, data){ 
+    if (err) throw err;
+    res.json(data);
+  }); 
+});
+
+
 
 module.exports = router;
