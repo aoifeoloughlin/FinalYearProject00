@@ -1,6 +1,7 @@
 package com.example.finalyearproject00;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +20,15 @@ import com.example.finalyearproject00.databinding.ActivityMainBinding;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,6 +89,24 @@ public class MainActivity extends AppCompatActivity {
     public void moveToNegPage(View vN){
         Intent intentN = new Intent(MainActivity.this, NegativePageActivity.class);
         startActivity(intentN);
+    }
+
+    public void getUserPosExp() {
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getUsersPos");
+        UrlEncodedFormEntity form;
+        try {
+            
+            HttpResponse response = httpclient.execute(httpget);
+
+            Log.i("HTTP Get", "Response from server node = " +
+                    response.getStatusLine().getReasonPhrase() + "  Code = " +
+                    response.getStatusLine().getStatusCode());
+        } catch (ClientProtocolException e) {
+            Log.e("HTTP Get", "Protocol error = " + e.toString());
+        } catch (IOException e) {
+            Log.e("HTTP Get", "IO error = " + e.toString());
+        }
     }
 
 }
