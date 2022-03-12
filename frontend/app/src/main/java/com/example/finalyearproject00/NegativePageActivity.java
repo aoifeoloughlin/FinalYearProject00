@@ -70,7 +70,8 @@ public class NegativePageActivity extends AppCompatActivity {
         addClick = 0;
         Spinner dropdown = findViewById(R.id.spinner);
         String[] items = new String[]{"1", "2", "3", "4", "5"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         LinearLayout layoutDropdown = (LinearLayout) findViewById(R.id.dropdownLayout);
         addTextBox.setOnClickListener(new View.OnClickListener() {

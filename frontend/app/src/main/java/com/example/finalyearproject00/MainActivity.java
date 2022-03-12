@@ -1,6 +1,7 @@
 package com.example.finalyearproject00;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -27,8 +28,14 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +48,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
 
+        }
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -52,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         Button posExp = findViewById(R.id.posExpView);
         //posExp.setOnClickListener(this::displayText);
        // posExp.getSettings().setJavaScriptEnabled(true);
-
         GraphView graphView = (GraphView) findViewById(R.id.graphOfExp);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
                 new DataPoint(0, 1),
@@ -70,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         //view.getSettings().setJavaScriptEnabled(true);
         //view.loadUrl("file:///android_asset/" + fileName);
 
+        getUserData();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         /**
@@ -91,22 +105,27 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentN);
     }
 
-    public void getUserPosExp() {
+    public void getUserData() {
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getUsersPos");
+        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getUsersData");
         UrlEncodedFormEntity form;
+        BufferedReader in = null;
         try {
-            
             HttpResponse response = httpclient.execute(httpget);
+            String JSONString = EntityUtils.toString(response.getEntity(),
+                        "UTF-8");
+            JSONObject jsonObject = new JSONObject(JSONString); //Assuming it's a JSON Object
 
-            Log.i("HTTP Get", "Response from server node = " +
-                    response.getStatusLine().getReasonPhrase() + "  Code = " +
-                    response.getStatusLine().getStatusCode());
+
         } catch (ClientProtocolException e) {
             Log.e("HTTP Get", "Protocol error = " + e.toString());
         } catch (IOException e) {
             Log.e("HTTP Get", "IO error = " + e.toString());
-        }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            }
+
     }
+
 
 }
