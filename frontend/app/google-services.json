@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "127004268332",
+    "project_id": "finalyearproject-aol",
+    "storage_bucket": "finalyearproject-aol.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127004268332:android:f44b574ff64b1f7e833e89",
+        "android_client_info": {
+          "package_name": "com.example.finalyearproject00"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "127004268332-7vaamqa504v1g9opq7vnpg8fa8577ago.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPJvZg5PUvqi-EdtiYPp8Xrw41ZfAc2zM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "127004268332-7vaamqa504v1g9opq7vnpg8fa8577ago.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

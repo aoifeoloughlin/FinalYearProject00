@@ -29,8 +29,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-
-
     <Button
         android:id="@+id/posExpView"
         android:layout_width="162dp"
@@ -55,4 +53,23 @@
         app:layout_constraintRight_toRightOf="parent"
         android:onClick="moveToNegPage"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="582dp"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:text="Logout"
+            android:textSize="10dp"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="@color/black"
+            android:layout_marginLeft="20dp">
+
+        </Button>
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

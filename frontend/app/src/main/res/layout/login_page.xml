@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="#E3F5FF"
+            >
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="95dp"
+            android:textColor="@color/black"
+            android:text="Login"
+            android:textSize="40dp">
+
+        </TextView>
+        </FrameLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginRight="62dp"
+            >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/username"
+            android:hint="Input Email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingLeft="17dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            ></EditText>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginRight="62dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/password"
+                android:hint="Input Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingLeft="17dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                ></EditText>
+        </RelativeLayout>
+        
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginRight="62dp"
+            android:backgroundTint="#255F85"
+            android:text="Submit"
+            android:id="@+id/submitLogin"
+            >
+
+        </Button>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginRight="62dp"
+            >
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@color/fui_transparent"
+               android:text="Forgot Password?"
+               android:textColor="@color/black"
+               android:textSize="10dp"
+               android:id="@+id/forgotPassword">
+
+           </Button>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_toRightOf="@+id/forgotPassword"
+                android:background="@color/fui_transparent"
+                android:textColor="@color/black"
+                android:text="Register"
+                android:textSize="10dp"
+                android:id="@+id/register">
+
+            </Button>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

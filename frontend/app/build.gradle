@@ -1,10 +1,10 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
     compileSdk 31
-
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
@@ -13,7 +13,6 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,6 +34,15 @@ android {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:29.2.0')
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:10.0.1'
+    implementation 'com.google.firebase:firebase-messaging:10.0.1'
+    implementation 'com.google.firebase:firebase-database:10.0.1'
+    implementation 'com.google.firebase:firebase-core:10.0.1'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.google.firebase:firebase-analytics'
     implementation 'org.mongodb:mongodb-driver:3.6.4'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.github.markushi:circlebutton:1.1'

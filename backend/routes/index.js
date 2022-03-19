@@ -28,6 +28,17 @@ router.get('/posExp', function(req,res){
   });
 });
 
+
+router.get('/getPositiveExperienceData', function(req,res){
+  // get data from mongodb and pass it to the view
+  req.
+  UsersModel.find({_id: uId}, function(err, data){ 
+    if (err) throw err;
+    res.json(data);
+  }); 
+});
+
+
 router.post('/newPosExp', function(req,res){
   // get data from the view and add it to mongodb
   var newPosExp = PosExpModel(req.body).save(function(err,data){
@@ -35,8 +46,6 @@ router.post('/newPosExp', function(req,res){
     res.json(data);
   });
 });
-
-
 
 router.get('/negExp', function(req,res){
   // get data from mongodb and pass it to the view
