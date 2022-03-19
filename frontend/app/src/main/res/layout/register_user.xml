@@ -64,25 +64,6 @@
                 android:paddingBottom="15dp"
                 ></EditText>
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="62dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="62dp"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/dateOfBirth"
-                android:hint="Input Date Of Birth"
-                android:inputType="date"
-                android:maxLines="1"
-                android:paddingLeft="17dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                ></EditText>
-        </RelativeLayout>
 
         <Button
             android:layout_width="match_parent"

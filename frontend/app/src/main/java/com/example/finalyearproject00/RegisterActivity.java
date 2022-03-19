@@ -39,14 +39,6 @@ import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth userAuth;
-    private Button registerUser;
-    private EditText signUpEmail;
-    private EditText signUpPassword;
-    private EditText signUpDOB;
-    private String email;
-    private String password;
-    private String dob;
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -57,21 +49,16 @@ public class RegisterActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
 
         }
-        setContentView(R.layout.register_user);
-
         userAuth = FirebaseAuth.getInstance();
-        registerUser = (Button) findViewById(R.id.submitRegister);
-        signUpEmail = (EditText) findViewById(R.id.registerEmail);
-        signUpPassword = (EditText) findViewById(R.id.registerPassword);
-        signUpDOB = (EditText) findViewById(R.id.dateOfBirth);
-        registerUser();
-
-
-    }
-
-    public void onClick(View v){
-        switch(v.getId()){
-            case R.id.submitRegister:
+        setContentView(R.layout.register_user);
+        Button registerUserButton = findViewById(R.id.submitRegister);
+        EditText signUpEmail = (EditText) findViewById(R.id.registerEmail);
+        EditText signUpPassword = (EditText) findViewById(R.id.registerPassword);
+        registerUserButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                System.out.println("i have been clicked");
+                String email = signUpEmail.getText().toString();
+                String password = signUpPassword.getText().toString();
                 userAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -80,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = userAuth.getCurrentUser();
-                                    registerNewUser(email, password, dob);
+                                    registerNewUser(email, password, user);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -89,46 +76,21 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                startActivity(new Intent(this, MainActivity.class));
-                break;
-        }
+
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+                }
+        });
     }
-
-
-    private void registerUser(){
-         email = signUpEmail.getText().toString().trim();
-         password = signUpPassword.getText().toString().trim();
-         dob = signUpDOB.getText().toString().trim();
-
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            signUpEmail.setError("Email is required!");
-            signUpEmail.requestFocus();
-            return;
-        }
-        if(password.isEmpty()){
-            signUpPassword.setError("Password is required!");
-            signUpPassword.requestFocus();
-            return;
-        }
-        if(dob.isEmpty()){
-            signUpDOB.setError("Date of Birth is required!");
-            signUpDOB.requestFocus();
-            return;
-        }
-    }
-
-    public void registerNewUser(String email, String password, String dob){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    public void registerNewUser(String email, String password, FirebaseUser user){
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost("http://10.0.2.2:3001/newUser");
         UrlEncodedFormEntity form;
         try {
-
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("userId",user.getUid()));
             nameValuePairs.add(new BasicNameValuePair("userName",email));
             nameValuePairs.add(new BasicNameValuePair("password",password));
-            nameValuePairs.add(new BasicNameValuePair("dateOfBirth", dob));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = httpclient.execute(httppost);
@@ -142,6 +104,4 @@ public class RegisterActivity extends AppCompatActivity {
             Log.e("HTTP Post", "IO error = " + e.toString());
         }
     }
-
-
 }

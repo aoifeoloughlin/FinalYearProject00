@@ -52,7 +52,6 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText register;
-    private FirebaseAuth userAuth;
     private Button registerUser;
     private EditText loginEmail;
     private EditText loginPassword;
@@ -69,42 +68,10 @@ public class LoginActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
 
         }
-        setContentView(R.layout.register_user);
-
-        userAuth = FirebaseAuth.getInstance();
 
         registerUser = (Button) findViewById(R.id.submitLogin);
         loginEmail = (EditText) findViewById(R.id.username);
         loginPassword = (EditText) findViewById(R.id.password);
-    }
-
-
-    public void onClick(View v){
-        switch(v.getId()) {
-            case R.id.submitLogin:
-                logUser();
-                userAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d(TAG, "signInWithEmail:success");
-                                    FirebaseUser user = userAuth.getCurrentUser();
-
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-                startActivity(new Intent(this, MainActivity.class));
-                break;
-
-        }
     }
 
     private void logUser(){
