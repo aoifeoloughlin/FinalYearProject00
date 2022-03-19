@@ -67,7 +67,8 @@
             android:textSize="10dp"
             android:backgroundTint="#FFFFFF"
             android:textColor="@color/black"
-            android:layout_marginLeft="20dp">
+            android:layout_marginLeft="20dp"
+            android:id="@+id/signOutButton">
 
         </Button>
 

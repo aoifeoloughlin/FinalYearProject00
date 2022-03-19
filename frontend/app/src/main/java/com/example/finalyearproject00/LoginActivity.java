@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText loginPassword;
     private String email;
     private String password;
+    private FirebaseAuth userAuthLog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,25 +69,43 @@ public class LoginActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
 
         }
-
+        userAuthLog = FirebaseAuth.getInstance();
+        setContentView(R.layout.login_page);
         registerUser = (Button) findViewById(R.id.submitLogin);
         loginEmail = (EditText) findViewById(R.id.username);
         loginPassword = (EditText) findViewById(R.id.password);
+        Button newUser = (Button) findViewById(R.id.register);
+        newUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+        registerUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = loginEmail.getText().toString();
+                String password = loginPassword.getText().toString();
+                userAuthLog.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "signInWithEmail:success");
+                                    FirebaseUser user = userAuthLog.getCurrentUser();
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
     }
-
-    private void logUser(){
-        email = loginEmail.getText().toString().trim();
-        password = loginPassword.getText().toString().trim();
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            loginEmail.setError("Email is required!");
-            loginEmail.requestFocus();
-            return;
-        }
-        if(password.isEmpty()){
-            loginPassword.setError("Password is required!");
-            loginPassword.requestFocus();
-            return;
-        }
-    }
-
 }

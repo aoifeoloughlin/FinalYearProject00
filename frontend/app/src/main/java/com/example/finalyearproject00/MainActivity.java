@@ -1,4 +1,6 @@
 package com.example.finalyearproject00;
+import static com.firebase.ui.auth.AuthUI.getInstance;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -6,7 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.finalyearproject00.databinding.ActivityMainBinding;
@@ -60,6 +67,22 @@ public class MainActivity extends AppCompatActivity {
         GraphView graphView = (GraphView) findViewById(R.id.graphOfExp);
         getUserData();
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        Button signOut = findViewById(R.id.signOutButton);
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    AuthUI.getInstance()
+                    .signOut(MainActivity.this)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            // user is now signed out
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            finish();
+                        }
+                    });
+            }
+        });
         /**
          * NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
          *

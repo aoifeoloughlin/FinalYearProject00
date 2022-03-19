@@ -77,6 +77,19 @@
             android:id="@+id/submitRegister"
             >
         </Button>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginRight="62dp"
+            android:backgroundTint="#255F85"
+            android:text="<<< Return to Login"
+            android:id="@+id/returnToLogin"
+            >
+        </Button>
     </LinearLayout>
 
 

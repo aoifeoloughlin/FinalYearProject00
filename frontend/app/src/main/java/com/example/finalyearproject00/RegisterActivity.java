@@ -54,6 +54,14 @@ public class RegisterActivity extends AppCompatActivity {
         Button registerUserButton = findViewById(R.id.submitRegister);
         EditText signUpEmail = (EditText) findViewById(R.id.registerEmail);
         EditText signUpPassword = (EditText) findViewById(R.id.registerPassword);
+        Button returnToLogin = findViewById(R.id.returnToLogin);
+        returnToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         registerUserButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 System.out.println("i have been clicked");
