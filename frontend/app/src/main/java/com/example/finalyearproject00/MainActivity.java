@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.finalyearproject00.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -42,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     GraphView graphView;
-    private Button posExp, negExp;
+    private Button posExp, negExp
+    FirebaseUser user = userAuth.getCurrentUser();
+    private FirebaseAuth userAuth;
 
     public String fileName = "homepageDesign.html";
 //C:\Users\Oloug\AndroidStudioProjects\FinalYearProject00\app\src\main\assets\homepageDesign.html
@@ -83,15 +86,6 @@ public class MainActivity extends AppCompatActivity {
                     });
             }
         });
-        /**
-         * NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-         *
-         *         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-         *                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-         *                 .build();
-         *         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-         *         NavigationUI.setupWithNavController(binding.navView, navController);
-         */
     }
     public void moveToPosPage(View v){
         Intent intent = new Intent(MainActivity.this, PositivePageActivity.class);
@@ -102,9 +96,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentN);
     }
 
-    public JSONArray getUserData() {
+    public JSONObject getUserData() {
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getUsersData");
+        String userFireId = user.getUid();
+        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getUsersData/:"+userFireId);
         UrlEncodedFormEntity form;
         BufferedReader in = null;
         try {
@@ -113,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         "UTF-8");
            JSONObject jsonObject = new JSONObject(JSONString); //Assuming it's a JSON Object
 
-            return jsonObject.getJSONArray("positiveExpSet");
+            return jsonObject;
         } catch (ClientProtocolException e) {
             Log.e("HTTP Get", "Protocol error = " + e.toString());
         } catch (IOException e) {
@@ -125,16 +120,9 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    public JSONArray getPositiveExperienceData() {
-        //getting info from posexp collection
-        //use the url to get the specific document
-        //use the general index function from back to get all
-        //using this method to get the info from the db if the user's id is correct
-        // add user id to the pos exp
-        //for i in range pe.array.length
-        // datapoint = (i, weight)
+    public JSONObject getPositiveExperienceData(String posId) {
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getPositiveExperienceData");
+        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getPositiveExperienceData/:"+posId);
         UrlEncodedFormEntity form;
         BufferedReader in = null;
         try {
@@ -143,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     "UTF-8");
             JSONObject jsonObject = new JSONObject(JSONString); //Assuming it's a JSON Object
 
-            return jsonObject.getJSONArray("positiveExpSet");
+            return jsonObject;
         } catch (ClientProtocolException e) {
             Log.e("HTTP Get", "Protocol error = " + e.toString());
         } catch (IOException e) {
@@ -156,20 +144,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getGraphData() throws JSONException {
-        JSONArray userPosExp = getUserData();
-        System.out.println(userPosExp);
-        String id1 = (String) userPosExp.get(0);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(0, 1)
-        });
+        JSONObject userData = getUserData();
+        JSONArray posExpGraph = userData.getJSONArray("positiveExpSet");
+        JSONArray negExpGraph = userData.getJSONArray("negativeExpSet");
+        LineGraphSeries<DataPoint> seriesPos = new LineGraphSeries<DataPoint>();
+        if((posExpGraph.length())!=0){
+        for(int i = 0; i<posExpGraph.length()-1; i++) {
+            JSONObject posDocument = getPositiveExperienceData((String) posExpGraph.get(i));
+            int weightPos = posDocument.getInt("weight");
+            seriesPos.appendData(new DataPoint(i, weightPos), true, posExpGraph.length());
+        }}
+        LineGraphSeries<DataPoint> seriesNeg = new LineGraphSeries<DataPoint>();
+        if((negExpGraph.length())!= 0){
+        for(int i = 0; i<negExpGraph.length()-1; i++) {
+            JSONObject negDocument = getPositiveExperienceData((String) posExpGraph.get(i));
+            int weightNeg = negDocument.getInt("weight");
+            seriesNeg.appendData(new DataPoint(i, weightNeg), true, negExpGraph.length());
+        }}
         graphView.setTitle("Positive and Negative Experiences"+ getCurrentTime().toString());
         graphView.setTitleColor(R.color.purple_200);
         graphView.setTitleTextSize(18);
-        graphView.addSeries(series);
+        graphView.addSeries(seriesPos);
+        graphView.addSeries(seriesNeg);
+        seriesPos.setColor(5624578);
+        seriesNeg.setColor(2457056);
     }
     public Date getCurrentTime() {
         Date timeStamp = Calendar.getInstance().getTime();
         return timeStamp;
     }
+
+
 
 }

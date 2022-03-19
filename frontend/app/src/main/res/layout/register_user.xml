@@ -86,7 +86,7 @@
             android:layout_marginTop="75dp"
             android:layout_marginRight="62dp"
             android:backgroundTint="#255F85"
-            android:text="<<< Return to Login"
+            android:text="Return to Login"
             android:id="@+id/returnToLogin"
             >
         </Button>

@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseUser;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ConnectionString;
 
@@ -51,6 +52,7 @@ public class NegativePageActivity extends AppCompatActivity {
 
     int addClick = 0;
 
+    FirebaseUser user = userAuth.getCurrentUser();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int SDK_INT = android.os.Build.VERSION.SDK_INT;

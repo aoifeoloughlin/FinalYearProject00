@@ -12,6 +12,8 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -30,6 +32,7 @@ import java.util.List;
 public class PositivePageActivity extends AppCompatActivity {
     int addClick = 0;
 
+    FirebaseUser user = userAuth.getCurrentUser();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int SDK_INT = android.os.Build.VERSION.SDK_INT;

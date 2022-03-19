@@ -29,10 +29,9 @@ router.get('/posExp', function(req,res){
 });
 
 
-router.get('/getPositiveExperienceData', function(req,res){
+router.get('/getPositiveExperienceData/:posIdGraph', function(req,res){
   // get data from mongodb and pass it to the view
-  req.
-  UsersModel.find({_id: uId}, function(err, data){ 
+  UsersModel.find({_id: req.params.posIdGraph}, function(err, data){ 
     if (err) throw err;
     res.json(data);
   }); 
@@ -84,10 +83,9 @@ router.post('/newUser', function(req,res){
 //GET user's set of positive ids
 // 1. Get with USER id set of positive ids
 // 2. for all the pos exp in the set get the pos objects with the positive ids
-router.get('/getUsersData', function(req,res){
+router.get('/getUsersData/:userIdFire', function(req,res){
   // get data from mongodb and pass it to the view
-  uId = "622bdc4137fa6365a1bbcfd6"
-  UsersModel.find({_id: uId}, function(err, data){ 
+  UsersModel.find({userId: req.params.userIdFire}, function(err, data){ 
     if (err) throw err;
     res.json(data);
   }); 
