@@ -9,17 +9,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-/* Login Route */
-router.post('/login', function(req, res, next) {
-  /* take user post attributes */
-  // e.g. username and password
-
-  // go to database to verify username and password
-
-  // Generator JWT with a uid (username) claim
-  // send back JWT to user
-});
-
 router.get('/posExp', function(req,res){
   // get data from mongodb and pass it to the view
   PosExpModel.find({}, function (err,data) {
@@ -37,7 +26,27 @@ router.get('/getPositiveExperienceData/:posIdGraph', function(req,res){
   }); 
 });
 
+router.get('/getAllUserPosExp/:userFireId', function(req, res){
+  PosExpModel.find({userId: req.params.userFireId}, function(err, data){
+    if (err) throw err;
 
+      var idArray = []
+      data.forEach(element => {
+        var id = (element._id).toString()
+        idArray.push(id)
+      })
+       res.json(idArray);        
+  })
+});
+
+router.put('/updateUserPosExp/:userFireId/:posSetIds', function(req,res){
+  UsersModel.updateOne({userId: req.params.userFireId},{$set:{positiveExpSet:req.params.posSetIds}}, function(err, dataUpdate){
+    if (err) throw err;
+    console.log(dataUpdate)
+    res.json(dataUpdate);
+  
+});
+})
 router.post('/newPosExp', function(req,res){
   // get data from the view and add it to mongodb
   var newPosExp = PosExpModel(req.body).save(function(err,data){
@@ -90,7 +99,5 @@ router.get('/getUsersData/:userIdFire', function(req,res){
     res.json(data);
   }); 
 });
-
-
 
 module.exports = router;

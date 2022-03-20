@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ConnectionString;
@@ -52,6 +53,7 @@ public class NegativePageActivity extends AppCompatActivity {
 
     int addClick = 0;
 
+    private FirebaseAuth userAuth;
     FirebaseUser user = userAuth.getCurrentUser();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +130,7 @@ public class NegativePageActivity extends AppCompatActivity {
 
     public void connectToDB(String textBox, String weight) {
             HttpClient httpclient = new DefaultHttpClient();
+            String userFireId = user.getUid();
             HttpPost httppost = new HttpPost("http://10.0.2.2:3001/newNegExp");
             UrlEncodedFormEntity form;
             try {
@@ -137,7 +140,7 @@ public class NegativePageActivity extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("negExperience",textBox));
                 nameValuePairs.add(new BasicNameValuePair("datePosted",now.toString()));
                 nameValuePairs.add(new BasicNameValuePair("weight", weight));
-
+                nameValuePairs.add(new BasicNameValuePair("userId", userFireId));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);

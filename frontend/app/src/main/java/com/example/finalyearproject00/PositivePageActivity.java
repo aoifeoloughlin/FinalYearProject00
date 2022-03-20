@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.apache.http.HttpResponse;
@@ -32,7 +33,10 @@ import java.util.List;
 public class PositivePageActivity extends AppCompatActivity {
     int addClick = 0;
 
+    private FirebaseAuth userAuth;
     FirebaseUser user = userAuth.getCurrentUser();
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -94,6 +98,7 @@ public class PositivePageActivity extends AppCompatActivity {
 
     public void connectToDB(String textBox, String weight) {
         HttpClient httpclient = new DefaultHttpClient();
+        String userFireId = user.getUid();
         HttpPost httppost = new HttpPost("http://10.0.2.2:3001/newPosExp");
         UrlEncodedFormEntity form;
         try {
@@ -103,7 +108,7 @@ public class PositivePageActivity extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("posExperience",textBox));
             nameValuePairs.add(new BasicNameValuePair("datePosted",now.toString()));
             nameValuePairs.add(new BasicNameValuePair("weight", weight));
-
+            nameValuePairs.add(new BasicNameValuePair("userId", userFireId));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = httpclient.execute(httppost);

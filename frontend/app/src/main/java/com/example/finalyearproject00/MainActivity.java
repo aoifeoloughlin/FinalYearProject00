@@ -4,7 +4,6 @@ import static com.firebase.ui.auth.AuthUI.getInstance;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,10 +23,10 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -43,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     GraphView graphView;
-    private Button posExp, negExp
-    FirebaseUser user = userAuth.getCurrentUser();
+    private Button posExp, negExp;
     private FirebaseAuth userAuth;
 
     public String fileName = "homepageDesign.html";
@@ -68,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
         Button negExp = findViewById(R.id.negExpView);
         Button posExp = findViewById(R.id.posExpView);
         GraphView graphView = (GraphView) findViewById(R.id.graphOfExp);
-        getUserData();
+        try {
+            updateUserInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         BottomNavigationView navView = findViewById(R.id.nav_view);
         Button signOut = findViewById(R.id.signOutButton);
 
@@ -96,57 +100,58 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentN);
     }
 
-    public JSONObject getUserData() {
+    public JSONArray getUserData() throws IOException, JSONException {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         HttpClient httpclient = new DefaultHttpClient();
         String userFireId = user.getUid();
         HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getUsersData/:"+userFireId);
         UrlEncodedFormEntity form;
         BufferedReader in = null;
-        try {
-            HttpResponse response = httpclient.execute(httpget);
-            String JSONString = EntityUtils.toString(response.getEntity(),
-                        "UTF-8");
-           JSONObject jsonObject = new JSONObject(JSONString); //Assuming it's a JSON Object
-
-            return jsonObject;
-        } catch (ClientProtocolException e) {
-            Log.e("HTTP Get", "Protocol error = " + e.toString());
-        } catch (IOException e) {
-            Log.e("HTTP Get", "IO error = " + e.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-            }
-
-        return null;
+        HttpResponse response = httpclient.execute(httpget);
+        String responseBody = EntityUtils.toString(response.getEntity());
+        JSONArray jsonObject = new JSONArray(responseBody);
+        return jsonObject;
     }
 
-    public JSONObject getPositiveExperienceData(String posId) {
+    public JSONObject getPositiveExperienceData(String posId) throws IOException, JSONException {
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getPositiveExperienceData/:"+posId);
         UrlEncodedFormEntity form;
         BufferedReader in = null;
-        try {
-            HttpResponse response = httpclient.execute(httpget);
-            String JSONString = EntityUtils.toString(response.getEntity(),
-                    "UTF-8");
-            JSONObject jsonObject = new JSONObject(JSONString); //Assuming it's a JSON Object
-
-            return jsonObject;
-        } catch (ClientProtocolException e) {
-            Log.e("HTTP Get", "Protocol error = " + e.toString());
-        } catch (IOException e) {
-            Log.e("HTTP Get", "IO error = " + e.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        HttpResponse response = httpclient.execute(httpget);
+        String responseBody = EntityUtils.toString(response.getEntity());
+        JSONObject jsonObject = new JSONObject(responseBody);
+        return jsonObject;
     }
 
-    public void getGraphData() throws JSONException {
-        JSONObject userData = getUserData();
-        JSONArray posExpGraph = userData.getJSONArray("positiveExpSet");
-        JSONArray negExpGraph = userData.getJSONArray("negativeExpSet");
+    public void updateUserInfo() throws IOException, JSONException {
+        String fireId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getAllUserPosExp/"+fireId);
+        HttpResponse responseGet = httpclient.execute(httpget);
+        String responseBody = EntityUtils.toString(responseGet.getEntity());
+
+        JSONArray jA = new JSONArray(responseBody);
+        //fix the second part by splitting the array string with & and then in the node re split it with &
+        //and save the ids to the array
+
+        //to do: get the pos exp data with the ids in the users' thing
+
+        // to do: on create get user ratio if it is less than 3 alert (""watch youtube"")
+        //else nothing
+
+        //to do:
+        HttpPut httpput = new HttpPut("http://10.0.2.2:3001/updateUserPosExp/"+fireId+"/"+responseBody);
+        HttpResponse responsePut = httpclient.execute(httpput);
+        UrlEncodedFormEntity form;
+        BufferedReader in = null;
+    }
+
+    public void getGraphData() throws JSONException, IOException {
+        JSONArray userData = getUserData();
+        System.out.println(userData);
+        JSONArray posExpGraph = userData.getJSONArray(4);
+        JSONArray negExpGraph = userData.getJSONArray(5);
         LineGraphSeries<DataPoint> seriesPos = new LineGraphSeries<DataPoint>();
         if((posExpGraph.length())!=0){
         for(int i = 0; i<posExpGraph.length()-1; i++) {
