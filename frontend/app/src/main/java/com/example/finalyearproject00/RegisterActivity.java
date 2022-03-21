@@ -98,7 +98,6 @@ public class RegisterActivity extends AppCompatActivity {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("userId",user.getUid()));
             nameValuePairs.add(new BasicNameValuePair("userName",email));
-            nameValuePairs.add(new BasicNameValuePair("password",password));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = httpclient.execute(httppost);
