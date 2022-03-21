@@ -8,12 +8,6 @@ const usersSchema = new Schema({
     userName: {
         type: String
     },
-    password: {
-        type: String
-    },
-    dateOfBirth: {
-        type: Date
-    },
     positiveExpSet:{
         type: Array
     },
