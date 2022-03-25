@@ -2,6 +2,7 @@ package com.example.finalyearproject00;
 import static com.firebase.ui.auth.AuthUI.getInstance;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -61,13 +63,16 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
 
         }
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_main);
         Button negExp = findViewById(R.id.negExpView);
         Button posExp = findViewById(R.id.posExpView);
-        GraphView graphView = (GraphView) findViewById(R.id.graphOfExp);
+        graphView = (GraphView) findViewById(R.id.graphOfExp);
         try {
-            updateUserInfo();
+            updatePositiveUserInfo();
+            updateNegativeUserInfo();
+            getGraphData(graphView);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -100,19 +105,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentN);
     }
 
-    public JSONArray getUserData() throws IOException, JSONException {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        HttpClient httpclient = new DefaultHttpClient();
-        String userFireId = user.getUid();
-        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getUsersData/:"+userFireId);
-        UrlEncodedFormEntity form;
-        BufferedReader in = null;
-        HttpResponse response = httpclient.execute(httpget);
-        String responseBody = EntityUtils.toString(response.getEntity());
-        JSONArray jsonObject = new JSONArray(responseBody);
-        return jsonObject;
-    }
-
     public JSONObject getPositiveExperienceData(String posId) throws IOException, JSONException {
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getPositiveExperienceData/:"+posId);
@@ -124,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         return jsonObject;
     }
 
-    public void updateUserInfo() throws IOException, JSONException {
+    public void updatePositiveUserInfo() throws IOException, JSONException {
         String fireId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getAllUserPosExp/"+fireId);
@@ -132,53 +124,83 @@ public class MainActivity extends AppCompatActivity {
         String responseBody = EntityUtils.toString(responseGet.getEntity());
 
         JSONArray jA = new JSONArray(responseBody);
-        //fix the second part by splitting the array string with & and then in the node re split it with &
-        //and save the ids to the array
-
-        //to do: get the pos exp data with the ids in the users' thing
-
-        // to do: on create get user ratio if it is less than 3 alert (""watch youtube"")
-        //else nothing
-
-        //to do:
-        HttpPut httpput = new HttpPut("http://10.0.2.2:3001/updateUserPosExp/"+fireId+"/"+responseBody);
+        String resBodyPos = "";
+        for (int i = 0; i < jA.length(); i++) {
+            resBodyPos += jA.get(i).toString()+"&";
+        }
+        HttpPut httpput = new HttpPut("http://10.0.2.2:3001/updateUserPosExp/"+fireId+"/"+resBodyPos);
         HttpResponse responsePut = httpclient.execute(httpput);
         UrlEncodedFormEntity form;
         BufferedReader in = null;
     }
 
-    public void getGraphData() throws JSONException, IOException {
-        JSONArray userData = getUserData();
-        System.out.println(userData);
-        JSONArray posExpGraph = userData.getJSONArray(4);
-        JSONArray negExpGraph = userData.getJSONArray(5);
-        LineGraphSeries<DataPoint> seriesPos = new LineGraphSeries<DataPoint>();
-        if((posExpGraph.length())!=0){
-        for(int i = 0; i<posExpGraph.length()-1; i++) {
-            JSONObject posDocument = getPositiveExperienceData((String) posExpGraph.get(i));
-            int weightPos = posDocument.getInt("weight");
-            seriesPos.appendData(new DataPoint(i, weightPos), true, posExpGraph.length());
-        }}
-        LineGraphSeries<DataPoint> seriesNeg = new LineGraphSeries<DataPoint>();
-        if((negExpGraph.length())!= 0){
-        for(int i = 0; i<negExpGraph.length()-1; i++) {
-            JSONObject negDocument = getPositiveExperienceData((String) posExpGraph.get(i));
-            int weightNeg = negDocument.getInt("weight");
-            seriesNeg.appendData(new DataPoint(i, weightNeg), true, negExpGraph.length());
-        }}
-        graphView.setTitle("Positive and Negative Experiences"+ getCurrentTime().toString());
+    public void updateNegativeUserInfo() throws IOException, JSONException {
+        String fireId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getAllUserNegExp/"+fireId);
+        HttpResponse responseGet = httpclient.execute(httpget);
+        String responseBody = EntityUtils.toString(responseGet.getEntity());
+
+        JSONArray jAN = new JSONArray(responseBody);
+        String resBodyNeg = "";
+        for (int i = 0; i < jAN.length(); i++) {
+            resBodyNeg += jAN.get(i).toString()+"&";
+        }
+        HttpPut httpput = new HttpPut("http://10.0.2.2:3001/updateUserNegExp/"+fireId+"/"+resBodyNeg);
+        HttpResponse responsePut = httpclient.execute(httpput);
+        UrlEncodedFormEntity form;
+        BufferedReader in = null;
+    }
+
+    public void getGraphData(GraphView graphView) throws JSONException, IOException {
+        String fireId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getAllUserPosExpWeights/"+fireId);
+        HttpResponse responseGet = httpclient.execute(httpget);
+        String responseBody = EntityUtils.toString(responseGet.getEntity());
+        JSONArray posExpGraph = new JSONArray(responseBody);
+        PointsGraphSeries<DataPoint> seriesPos = new PointsGraphSeries<>(getPosPoints(posExpGraph));
+        HttpGet httpgetNEG = new HttpGet("http://10.0.2.2:3001/getAllUserNegExpWeights/"+fireId);
+        HttpResponse responseGetNEG = httpclient.execute(httpgetNEG);
+        String responseBodyNEG = EntityUtils.toString(responseGetNEG.getEntity());
+        JSONArray negExpGraph = new JSONArray(responseBodyNEG);
+        PointsGraphSeries<DataPoint> seriesNeg = new PointsGraphSeries<>(getNegPoints(negExpGraph));
+        graphView.setTitle("Today's Positive and Negative Experiences");
         graphView.setTitleColor(R.color.purple_200);
-        graphView.setTitleTextSize(18);
+        graphView.setTitleTextSize(30);
         graphView.addSeries(seriesPos);
+        seriesPos.setSize(20);
+        seriesPos.setShape(PointsGraphSeries.Shape.POINT);
         graphView.addSeries(seriesNeg);
-        seriesPos.setColor(5624578);
-        seriesNeg.setColor(2457056);
+        seriesNeg.setShape(PointsGraphSeries.Shape.POINT);
+        seriesNeg.setSize(20);
+        seriesPos.setColor(Color.GREEN);
+        seriesNeg.setColor(Color.RED);
     }
     public Date getCurrentTime() {
         Date timeStamp = Calendar.getInstance().getTime();
         return timeStamp;
     }
 
+    public DataPoint[] getPosPoints(JSONArray posExpGraph) throws JSONException {
+        DataPoint[] values = new DataPoint[posExpGraph.length()];
+        if((posExpGraph.length())!=0){
+            for(int i = 0; i<posExpGraph.length(); i++) {
+                int weightPos = (int) posExpGraph.get(i);
+                values[i] = new DataPoint((i+1), weightPos);
+            }}
+        return values;
+    }
+
+    public DataPoint[] getNegPoints(JSONArray negExpGraph) throws JSONException {
+        DataPoint[] values = new DataPoint[negExpGraph.length()];
+        if((negExpGraph.length())!=0){
+            for(int i = 0; i<negExpGraph.length(); i++) {
+                int weightNeg = (int) negExpGraph.get(i);
+                values[i] = new DataPoint((i+1), weightNeg);
+            }}
+        return values;
+    }
 
 
 }

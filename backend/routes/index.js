@@ -26,6 +26,30 @@ router.get('/getPositiveExperienceData/:posIdGraph', function(req,res){
   }); 
 });
 
+router.get('/getAllUserPosExpWeights/:userFireId', function(req, res){
+  PosExpModel.find({userId: req.params.userFireId}, function(err, data){
+    if (err) throw err;
+      var weightArray = []
+      data.forEach(element => {
+        var weights = (element.weight)
+        weightArray.push(weights)
+      })
+       res.json(weightArray);        
+  })
+});
+
+router.get('/getAllUserNegExpWeights/:userFireId', function(req, res){
+  NegExpModel.find({userId: req.params.userFireId}, function(err, data){
+    if (err) throw err;
+      var weightArray = []
+      data.forEach(element => {
+        var weights = (element.weight)
+        weightArray.push(weights)
+      })
+       res.json(weightArray);        
+  })
+});
+
 router.get('/getAllUserPosExp/:userFireId', function(req, res){
   PosExpModel.find({userId: req.params.userFireId}, function(err, data){
     if (err) throw err;
@@ -39,14 +63,57 @@ router.get('/getAllUserPosExp/:userFireId', function(req, res){
   })
 });
 
-router.put('/updateUserPosExp/:userFireId/:posSetIds', function(req,res){
-  UsersModel.updateOne({userId: req.params.userFireId},{$set:{positiveExpSet:req.params.posSetIds}}, function(err, dataUpdate){
+router.get('/getAllUserNegExp/:userFireId', function(req, res){
+  NegExpModel.find({userId: req.params.userFireId}, function(err, data){
     if (err) throw err;
+      var idArray = []
+      data.forEach(element => {
+        var id = (element._id).toString()
+        idArray.push(id)
+      })
+       res.json(idArray);        
+  })
+});
+
+router.put('/updateUserPosExp/:userFireId/:posSetIds', function(req,res){
+  var posString = req.params.posSetIds;
+  var arrPos = posString.split('&');
+  if(arrPos != null){
+  UsersModel.updateOne({userId: req.params.userFireId},{$set:{positiveExpSet:arrPos}}, function(err, dataUpdate){
+    if (err) throw err;
+    console.log(arrPos)
     console.log(dataUpdate)
     res.json(dataUpdate);
   
-});
+  });}
+  else{
+    UsersModel.updateOne({userId: req.params.userFireId},{$set:{positiveExpSet:[0]}}, function(err, dataUpdate){
+      if (err) throw err;
+      console.log(dataUpdate)
+      res.json(dataUpdate);
+    
+    });
+  }
 })
+
+router.put('/updateUserNegExp/:userFireId/:negSetIds', function(req,res){
+  var negString = req.params.negSetIds;
+  var arrNeg = negString.split('&');
+  if(arrNeg != null){
+  UsersModel.updateOne({userId: req.params.userFireId},{$set:{negativeExpSet:arrNeg}}, function(err, dataUpdate){
+    if (err) throw err;
+    console.log(dataUpdate)
+    res.json(dataUpdate);
+  });
+} else{
+    UsersModel.updateOne({userId: req.params.userFireId},{$set:{negativeExpSet:[0]}}, function(err, dataUpdate){
+      if (err) throw err;
+      console.log(dataUpdate)
+      res.json(dataUpdate);
+    });}
+})
+
+
 router.post('/newPosExp', function(req,res){
   // get data from the view and add it to mongodb
   var newPosExp = PosExpModel(req.body).save(function(err,data){
@@ -93,9 +160,9 @@ router.post('/newUser', function(req,res){
 // 1. Get with USER id set of positive ids
 // 2. for all the pos exp in the set get the pos objects with the positive ids
 router.get('/getUsersData/:userIdFire', function(req,res){
-  // get data from mongodb and pass it to the view
   UsersModel.find({userId: req.params.userIdFire}, function(err, data){ 
     if (err) throw err;
+    console.log(data[4])
     res.json(data);
   }); 
 });
