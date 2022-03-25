@@ -53,8 +53,8 @@ public class NegativePageActivity extends AppCompatActivity {
 
     int addClick = 0;
 
-    private FirebaseAuth userAuth;
-    FirebaseUser user = userAuth.getCurrentUser();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int SDK_INT = android.os.Build.VERSION.SDK_INT;

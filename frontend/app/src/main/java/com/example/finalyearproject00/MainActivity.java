@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -73,11 +74,16 @@ public class MainActivity extends AppCompatActivity {
             updatePositiveUserInfo();
             updateNegativeUserInfo();
             getGraphData(graphView);
+            String ratioAnnounce = "User's Ratio is: "+calculateRatio();
+            Toast toast=Toast. makeText(getApplicationContext(),ratioAnnounce, Toast. LENGTH_SHORT);
+            toast.show();
+            toast.setDuration(Toast.LENGTH_LONG);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         Button signOut = findViewById(R.id.signOutButton);
 
@@ -103,17 +109,6 @@ public class MainActivity extends AppCompatActivity {
     public void moveToNegPage(View vN){
         Intent intentN = new Intent(MainActivity.this, NegativePageActivity.class);
         startActivity(intentN);
-    }
-
-    public JSONObject getPositiveExperienceData(String posId) throws IOException, JSONException {
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getPositiveExperienceData/:"+posId);
-        UrlEncodedFormEntity form;
-        BufferedReader in = null;
-        HttpResponse response = httpclient.execute(httpget);
-        String responseBody = EntityUtils.toString(response.getEntity());
-        JSONObject jsonObject = new JSONObject(responseBody);
-        return jsonObject;
     }
 
     public void updatePositiveUserInfo() throws IOException, JSONException {
@@ -200,6 +195,34 @@ public class MainActivity extends AppCompatActivity {
                 values[i] = new DataPoint((i+1), weightNeg);
             }}
         return values;
+    }
+
+    public int calculateRatio() throws JSONException, IOException {
+        String fireId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getAllUserPosExpWeights/"+fireId);
+        HttpResponse responseGet = httpclient.execute(httpget);
+        String responseBody = EntityUtils.toString(responseGet.getEntity());
+        JSONArray posWeight = new JSONArray(responseBody);
+        HttpGet httpgetNEG = new HttpGet("http://10.0.2.2:3001/getAllUserNegExpWeights/"+fireId);
+        HttpResponse responseGetNEG = httpclient.execute(httpgetNEG);
+        String responseBodyNEG = EntityUtils.toString(responseGetNEG.getEntity());
+        JSONArray negWeight = new JSONArray(responseBodyNEG);
+
+        int totalWeightValuePos = 0;
+        int totalWeightValueNeg = 0;
+
+        for(int i = 0; i<posWeight.length(); i++){
+            totalWeightValuePos += posWeight.getInt(i);
+        }
+        for(int j = 0; j<negWeight.length(); j++){
+            totalWeightValueNeg += negWeight.getInt(j);
+        }
+
+        int posWeightTotalScore = totalWeightValuePos*(posWeight.length());
+        int negWeightTotalScore = totalWeightValueNeg*(negWeight.length());
+
+        return (int) (posWeightTotalScore/negWeightTotalScore);
     }
 
 
