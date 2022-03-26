@@ -63,6 +63,15 @@ router.get('/getAllUserPosExp/:userFireId', function(req, res){
   })
 });
 
+
+router.get('/getAllUserPosExpInfo/:userFireId', function(req, res){
+  PosExpModel.find({userId: req.params.userFireId}, function(err, data){
+    if (err) throw err;
+       res.json(data);        
+  })
+});
+
+
 router.get('/getAllUserNegExp/:userFireId', function(req, res){
   NegExpModel.find({userId: req.params.userFireId}, function(err, data){
     if (err) throw err;
@@ -153,18 +162,6 @@ router.post('/newUser', function(req,res){
     if (err) throw err;
     res.json(data);
   });
-});
-
-
-//GET user's set of positive ids
-// 1. Get with USER id set of positive ids
-// 2. for all the pos exp in the set get the pos objects with the positive ids
-router.get('/getUsersData/:userIdFire', function(req,res){
-  UsersModel.find({userId: req.params.userIdFire}, function(err, data){ 
-    if (err) throw err;
-    console.log(data[4])
-    res.json(data);
-  }); 
 });
 
 module.exports = router;

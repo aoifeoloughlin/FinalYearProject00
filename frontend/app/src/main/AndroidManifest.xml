@@ -51,6 +51,17 @@
             android:label="@string/app_name">
 
         </activity>
+        <activity
+            android:name=".ViewAllPosActivity"
+            android:label="@string/app_name">
+
+        </activity>
+        <activity
+            android:name=".ViewAllNegActivity"
+            android:label="@string/app_name">
+
+        </activity>
+
     </application>
 
 </manifest>
