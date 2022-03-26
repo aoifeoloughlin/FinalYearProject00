@@ -5,8 +5,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -49,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth userAuth;
 
     public String fileName = "homepageDesign.html";
-//C:\Users\Oloug\AndroidStudioProjects\FinalYearProject00\app\src\main\assets\homepageDesign.html
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,24 +76,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button negExp = findViewById(R.id.negExpView);
         Button posExp = findViewById(R.id.posExpView);
+        Button resources = findViewById(R.id.helpfulResources);
         graphView = (GraphView) findViewById(R.id.graphOfExp);
         try {
             updatePositiveUserInfo();
             updateNegativeUserInfo();
             getGraphData(graphView);
             String ratioAnnounce = "User's Ratio is: "+calculateRatio();
-            Toast toast=Toast. makeText(getApplicationContext(),ratioAnnounce, Toast. LENGTH_SHORT);
+            Toast toast=Toast.makeText(getApplicationContext(),ratioAnnounce, Toast. LENGTH_SHORT);
             toast.show();
             toast.setDuration(Toast.LENGTH_LONG);
+            if(calculateRatio() < 3){
+                resources.setVisibility(View.VISIBLE);
+                resources.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, PopupActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
         Button signOut = findViewById(R.id.signOutButton);
-
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +240,4 @@ public class MainActivity extends AppCompatActivity {
 
         return (int) (posWeightTotalScore/negWeightTotalScore);
     }
-
-
 }

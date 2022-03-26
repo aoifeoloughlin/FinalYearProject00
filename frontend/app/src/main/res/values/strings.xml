@@ -6,4 +6,10 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="linkToHeadspace">
+        <a href="https://www.youtube.com/channel/UC3JhfsgFPLSLNEROQCdj-GQ">Headspace Meditation YouTube Channel</a>
+    </string>
+    <string name="linkToYoga">
+        <a href="https://www.youtube.com/channel/UCFKE7WVJfvaHW5q283SxchA">Yoga with Adriene YouTube Channel</a>
+    </string>
 </resources>

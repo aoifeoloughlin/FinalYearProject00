@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ff6961"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/popupRatioWin">
+
+
+    <TextView
+        android:id="@+id/ratioMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="480dp"
+        android:text="Is everything ok?\n Your ratio is low, here are some resources that might help:"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/headspace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ratioMessage"
+        android:layout_marginTop="36dp"
+        android:text="@string/linkToHeadspace"
+        android:textSize="22sp"
+        app:layout_constraintTop_toBottomOf="@id/ratioMessage"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/yoga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headspace"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="36dp"
+        android:text="@string/linkToYoga"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_constraintTop_toBottomOf="@id/headspace"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="25dp" />
+
+    <Button
+        android:id="@+id/leaveResourcePage"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="168dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Back to Main Page"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintLeft_toLeftOf="@id/yoga"
+        app:layout_constraintTop_toBottomOf="@id/yoga"
+        tools:ignore="MissingConstraints"></Button>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
