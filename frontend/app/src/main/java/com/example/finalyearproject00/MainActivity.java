@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         String responseBodyNEG = EntityUtils.toString(responseGetNEG.getEntity());
         JSONArray negExpGraph = new JSONArray(responseBodyNEG);
         PointsGraphSeries<DataPoint> seriesNeg = new PointsGraphSeries<>(getNegPoints(negExpGraph));
-        graphView.setTitle("Today's Positive and Negative Experiences");
+        graphView.setTitle("Positive and Negative Experiences");
         graphView.setTitleColor(R.color.purple_200);
         graphView.setTitleTextSize(30);
         graphView.addSeries(seriesPos);

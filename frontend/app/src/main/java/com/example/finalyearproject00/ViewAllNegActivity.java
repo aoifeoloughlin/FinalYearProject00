@@ -66,7 +66,7 @@ public class ViewAllNegActivity extends AppCompatActivity{
         for(int i = 0; i<negExpFromDB.length(); i++){
 
             JSONObject experience = (JSONObject) negExpFromDB.get(i);
-            String description = (String) experience.get("posExperience");
+            String description = (String) experience.get("negExperience");
 
             String datePost = (String) experience.get("datePosted");
             datePost = datePost.substring(0, 10);
@@ -74,7 +74,7 @@ public class ViewAllNegActivity extends AppCompatActivity{
             negativeExperienceInfo.add("Positive Experience:\n Description: "+description+"\n Posted: "+datePost
                     +"\n Weight: "+expWeight+"\n");
         }
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rlPos);
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rlNeg);
 
         TextView negBox = new TextView(ViewAllNegActivity.this);
 
@@ -85,7 +85,7 @@ public class ViewAllNegActivity extends AppCompatActivity{
 
         negBox.setVerticalScrollBarEnabled(true);
         negBox.setMovementMethod(new ScrollingMovementMethod());
-        negBox.setMaxLines(35);
+        negBox.setMaxLines(33);
         relativeLayout.addView(negBox);
 
     }

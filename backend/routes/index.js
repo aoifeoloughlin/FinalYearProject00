@@ -71,6 +71,13 @@ router.get('/getAllUserPosExpInfo/:userFireId', function(req, res){
   })
 });
 
+router.get('/getAllUserNegExpInfo/:userFireId', function(req, res){
+  NegExpModel.find({userId: req.params.userFireId}, function(err, data){
+    if (err) throw err;
+       res.json(data);        
+  })
+});
+
 
 router.get('/getAllUserNegExp/:userFireId', function(req, res){
   NegExpModel.find({userId: req.params.userFireId}, function(err, data){
