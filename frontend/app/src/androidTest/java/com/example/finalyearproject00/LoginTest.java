@@ -53,45 +53,13 @@ public class LoginTest {
         loginactivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // click button and open next activity.
                 button.performClick();
             }
         });
-
-        //Watch for the timeout
-        //example values 5000 if in ms, or 5 if it's in seconds.
          mainActivity = (MainActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
-        // next activity is opened and captured.
         assertNotNull(mainActivity);
     }
 
-   /* @Rule
-    public ActivityTestRule<PositivePageActivity> positivePageActivityActivityTestRule =
-            new ActivityTestRule(PositivePageActivity.class);
-*/
-    @Test
-    public void clickAllPositiveExperiencesView(){
-        //positivePageActivity = positivePageActivityActivityTestRule.getActivity();
-        ActivityMonitor activityMonitor = getInstrumentation().addMonitor(PositivePageActivity.class.getName(), null, false);
-
-        final Button posbutton = (Button) mainActivity.findViewById(R.id.posExpView);
-                // click button and open next activity.
-                posbutton.performClick();
-
-        //Watch for the timeout
-        //example values 5000 if in ms, or 5 if it's in seconds.
-        positivePageActivity = (PositivePageActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
-        // next activity is opened and captured.
-        assertNotNull(positivePageActivity);
-
-        //add a few experiences
-    }
-
-
-    @Test
-    public void clickAllNegativeExperiencesView(){
-
-    }
 
 
 
