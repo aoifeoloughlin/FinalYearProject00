@@ -156,7 +156,7 @@ public class PositivePageActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         EditText textView = new EditText(this);
         textView.setLayoutParams(lparams);
-        textView.setText("Positive Experience Input");
+        textView.setHint("Positive Experience Input");
 
         return textView;
     }

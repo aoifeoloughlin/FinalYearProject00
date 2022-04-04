@@ -122,7 +122,7 @@ public class NegativePageActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         EditText textView = new EditText(this);
         textView.setLayoutParams(lparams);
-        textView.setText("Negative Experience Input");
+        textView.setHint("Negative Experience Input");
         return textView;
     }
 
