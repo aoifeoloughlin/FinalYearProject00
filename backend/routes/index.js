@@ -94,39 +94,25 @@ router.get('/getAllUserNegExp/:userFireId', function(req, res){
 router.put('/updateUserPosExp/:userFireId/:posSetIds', function(req,res){
   var posString = req.params.posSetIds;
   var arrPos = posString.split('&');
-  if(arrPos != null){
   UsersModel.updateOne({userId: req.params.userFireId},{$set:{positiveExpSet:arrPos}}, function(err, dataUpdate){
     if (err) throw err;
     console.log(arrPos)
     console.log(dataUpdate)
     res.json(dataUpdate);
   
-  });}
-  else{
-    UsersModel.updateOne({userId: req.params.userFireId},{$set:{positiveExpSet:[0]}}, function(err, dataUpdate){
-      if (err) throw err;
-      console.log(dataUpdate)
-      res.json(dataUpdate);
-    
-    });
-  }
+  });
 })
 
 router.put('/updateUserNegExp/:userFireId/:negSetIds', function(req,res){
   var negString = req.params.negSetIds;
   var arrNeg = negString.split('&');
-  if(arrNeg != null){
+  
   UsersModel.updateOne({userId: req.params.userFireId},{$set:{negativeExpSet:arrNeg}}, function(err, dataUpdate){
     if (err) throw err;
     console.log(dataUpdate)
     res.json(dataUpdate);
   });
-} else{
-    UsersModel.updateOne({userId: req.params.userFireId},{$set:{negativeExpSet:[0]}}, function(err, dataUpdate){
-      if (err) throw err;
-      console.log(dataUpdate)
-      res.json(dataUpdate);
-    });}
+  
 })
 
 

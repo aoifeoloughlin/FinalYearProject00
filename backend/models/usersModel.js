@@ -9,13 +9,16 @@ const usersSchema = new Schema({
         type: String
     },
     positiveExpSet:{
-        type: Array
+        type: Array,
+        default: [0]
     },
     negativeExpSet:{
-        type: Array
+        type: Array,
+        default: [0]
     },
     ratioScore:{
-        type: String
+        type: String,
+        default: 4
     }
 });
 

@@ -1,12 +1,10 @@
 package com.example.finalyearproject00;
 
 import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.firebase.ui.auth.data.model.User;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -34,7 +30,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -67,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                 System.out.println("i have been clicked");
                 String email = signUpEmail.getText().toString();
                 String password = signUpPassword.getText().toString();
+                System.out.println(email);
                 userAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -76,6 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = userAuth.getCurrentUser();
                                     registerNewUser(email, password, user);
+                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    startActivity(intent);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -84,9 +82,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(intent);
                 }
         });
     }

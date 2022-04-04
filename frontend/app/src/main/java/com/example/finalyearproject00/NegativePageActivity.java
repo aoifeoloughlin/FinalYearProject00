@@ -2,20 +2,6 @@ package com.example.finalyearproject00;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.mongodb.MongoClientURI;
-import com.mongodb.ConnectionString;
-
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
@@ -25,8 +11,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -36,14 +24,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.bson.Document;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,7 +34,7 @@ import java.util.List;
 public class NegativePageActivity extends AppCompatActivity {
 
     int addClick = 0;
-
+    String weightValue;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public void onCreate(Bundle savedInstanceState) {
@@ -100,13 +82,29 @@ public class NegativePageActivity extends AppCompatActivity {
 
         submitDB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for(int i = 0; i<layout.getChildCount(); i++){
-                    if(i == 0){
-                        connectToDB(textBox.getText().toString(), dropdown.getSelectedItem().toString());
+                if(addClick == 0){
+                    weightValue = dropdown.getSelectedItem().toString();
+                    if(weightValue == null ){
+                        weightValue = String .valueOf(1);
                     }
+                    System.out.println(textBox.getText().toString());
+                    connectToDB(textBox.getText().toString(),weightValue);
+                }
+
+                for(int i = 0; i<layout.getChildCount(); i++){
+                    weightValue = dropdown.getSelectedItem().toString();
+                    if(weightValue == null ){
+                        weightValue = String.valueOf(1);
+                    }
+
+                    connectToDB(textBox.getText().toString(),weightValue);
                     EditText childExp = (EditText) layout.getChildAt(i);
                     Spinner childWeight = (Spinner) layoutDropdown.getChildAt(i);
-                    connectToDB(childExp.getText().toString(), childWeight.getSelectedItem().toString());
+                    String cWeight = childWeight.getSelectedItem().toString();
+                    if(cWeight == null ){
+                        cWeight = String.valueOf(1);
+                    }
+                    connectToDB(childExp.getText().toString(), cWeight);
                 }
                 Intent intent = new Intent(NegativePageActivity.this, PositivePageActivity.class);
                 startActivity(intent);

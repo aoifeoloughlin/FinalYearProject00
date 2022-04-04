@@ -1,6 +1,4 @@
 package com.example.finalyearproject00;
-import static com.firebase.ui.auth.AuthUI.getInstance;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,15 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.finalyearproject00.databinding.ActivityMainBinding;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.PointsGraphSeries;
@@ -43,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
     GraphView graphView;
     private Button posExp, negExp;
     private FirebaseAuth userAuth;
-
-    public String fileName = "homepageDesign.html";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,9 +127,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updatePositiveUserInfo() throws IOException, JSONException {
-        String fireId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser userF = auth.getCurrentUser();
+        String fireId = userF.getUid();
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet("http://10.0.2.2:3001/getAllUserPosExp/"+fireId);
+
         HttpResponse responseGet = httpclient.execute(httpget);
         String responseBody = EntityUtils.toString(responseGet.getEntity());
 
@@ -237,10 +236,21 @@ public class MainActivity extends AppCompatActivity {
         for(int j = 0; j<negWeight.length(); j++){
             totalWeightValueNeg += negWeight.getInt(j);
         }
+        int posWeightTotalScore=0;
+        int negWeightTotalScore=0;
 
-        int posWeightTotalScore = totalWeightValuePos*(posWeight.length());
-        int negWeightTotalScore = totalWeightValueNeg*(negWeight.length());
-
+        if(totalWeightValueNeg ==0 && totalWeightValuePos ==0){
+            posWeightTotalScore=3;
+            negWeightTotalScore=1;
+        }
+        else if(totalWeightValueNeg == 0){
+            negWeightTotalScore =1;
+        }else if (totalWeightValuePos == 0){
+            posWeightTotalScore =1;
+        }else{
+            posWeightTotalScore = totalWeightValuePos * (posWeight.length());
+            negWeightTotalScore = totalWeightValueNeg * (negWeight.length());
+        }
         return (int) (posWeightTotalScore/negWeightTotalScore);
     }
 }

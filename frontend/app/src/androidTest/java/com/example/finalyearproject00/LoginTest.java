@@ -59,8 +59,4 @@ public class LoginTest {
          mainActivity = (MainActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
         assertNotNull(mainActivity);
     }
-
-
-
-
 }

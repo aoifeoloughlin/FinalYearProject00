@@ -32,7 +32,7 @@ import java.util.List;
 
 public class PositivePageActivity extends AppCompatActivity {
     int addClick = 0;
-
+    String weightValue;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,39 @@ public class PositivePageActivity extends AppCompatActivity {
         LinearLayout layoutDropdown = (LinearLayout) findViewById(R.id.dropdownLayout);
         EditText textBoxP = (EditText) findViewById(R.id.positiveExp01);
         addClick = 0;
+        submitDB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(addClick == 0){
+                    weightValue = dropdown.getSelectedItem().toString();
+                    if(weightValue == null ){
+                        weightValue = String .valueOf(1);
+                    }
+                    System.out.println(textBox.getText().toString());
+                    connectToDB(textBox.getText().toString(),weightValue);
+                }
+                for(int i = 0; i<layoutP.getChildCount(); i++){
+                    if(i==0){
+                        weightValue = dropdown.getSelectedItem().toString();
+                        if(weightValue == null ){
+                            weightValue = String .valueOf(1);
+                        }
+                        System.out.println(textBox.getText().toString());
+                        connectToDB(textBox.getText().toString(),weightValue);
+                    }
+
+                    EditText childExp = (EditText) layoutP.getChildAt(i);
+                    Spinner childWeight = (Spinner) layoutDropdown.getChildAt(i);
+                    String cWeight = childWeight.getSelectedItem().toString();
+                    if(cWeight == null ){
+                        cWeight = String.valueOf(1);
+                    }
+                    connectToDB(childExp.getText().toString(), cWeight);
+                }
+                Intent intent = new Intent(PositivePageActivity.this, MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
         addPTextBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(addClick <= 3) {
@@ -78,20 +111,7 @@ public class PositivePageActivity extends AppCompatActivity {
             }
         });
 
-        submitDB.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                for(int i = 0; i<layoutP.getChildCount(); i++){
-                    if(i == 0){
-                        connectToDB(textBox.getText().toString(), dropdown.getSelectedItem().toString());
-                    }
-                    EditText childExp = (EditText) layoutP.getChildAt(i);
-                    Spinner childWeight = (Spinner) layoutDropdown.getChildAt(i);
-                    connectToDB(childExp.getText().toString(), childWeight.getSelectedItem().toString());
-                }
-                Intent intent = new Intent(PositivePageActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     public void connectToDB(String textBox, String weight) {
@@ -99,6 +119,7 @@ public class PositivePageActivity extends AppCompatActivity {
         String userFireId = user.getUid();
         HttpPost httppost = new HttpPost("http://10.0.2.2:3001/newPosExp");
         UrlEncodedFormEntity form;
+
         try {
             Date now = getCurrentTime();
 

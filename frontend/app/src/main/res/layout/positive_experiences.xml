@@ -31,7 +31,7 @@
             android:layout_marginBottom="-145dp"
             android:inputType="textAutoCorrect"
             android:minHeight="45dp"
-            android:text="Positive Experience Input"
+            android:hint="Positive Experience Input"
             android:textColor="@color/black"
             tools:ignore="SpeakableTextPresentCheck">
 
@@ -104,7 +104,7 @@
 
         <Button
             android:id="@+id/goBackToHome"
-            android:layout_width="62dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/positiveExp01"
             android:layout_alignParentLeft="true"
@@ -113,7 +113,8 @@
             android:backgroundTint="#9CBFA7"
             android:onClick="moveToHomePage"
             android:shape="oval"
+            android:text="Back"
             android:textColor="#FFFFFF"
-            android:textSize="18dp" />
+            android:textSize="12dp" />
     </RelativeLayout>
 </layout>
