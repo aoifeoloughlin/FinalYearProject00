@@ -6,13 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#ffcccb">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlNeg"
-        tools:ignore="MissingConstraints">
 
-    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/rlNeg"
+        android:layout_width="200dp"
+        android:layout_height="500dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="52dp"
+        android:layout_marginBottom="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/leaveResourcePageNeg"
+        app:layout_constraintLeft_toLeftOf="@id/leaveResourcePageNeg"
+        tools:ignore="MissingConstraints,NotSibling">
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/leaveResourcePageNeg"

@@ -29,9 +29,9 @@
             android:layout_alignBottom="@+id/PositivePageTitle"
             android:layout_marginLeft="70dp"
             android:layout_marginBottom="-145dp"
+            android:hint="Positive Experience Input"
             android:inputType="textAutoCorrect"
             android:minHeight="45dp"
-            android:hint="Positive Experience Input"
             android:textColor="@color/black"
             tools:ignore="SpeakableTextPresentCheck">
 

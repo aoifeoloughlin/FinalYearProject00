@@ -1,16 +1,17 @@
 package com.example.finalyearproject00;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Scroller;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -22,7 +23,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,21 +74,23 @@ public class ViewAllPosActivity extends AppCompatActivity{
                 positiveExperienceInfo.add("Positive Experience:\n Description: "+description+"\n Posted: "+datePost
                 +"\n Weight: "+expWeight+"\n");
             }
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rlPos);
+            LinearLayout relativeLayout = (android.widget.LinearLayout) findViewById(R.id.rlPos);
 
             TextView posBox = new TextView(ViewAllPosActivity.this);
+            CardView cardView = new CardView(ViewAllPosActivity.this);
 
             for(int j = 0; j<positiveExperienceInfo.size(); j++){
-                posBox.append("\n "+ (j+1) +"\n");
-                System.out.println(positiveExperienceInfo.get(j));
+                posBox.append("\n \n");
                 posBox.append(positiveExperienceInfo.get(j));
-            }
+                posBox.setMovementMethod(new ScrollingMovementMethod());
+                posBox.setMaxLines(35);
+                posBox.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                posBox.setVerticalScrollBarEnabled(true);
 
-            posBox.setVerticalScrollBarEnabled(true);
-            posBox.setMovementMethod(new ScrollingMovementMethod());
-            posBox.setMaxLines(35);
-            relativeLayout.addView(posBox);
+            }
+            cardView.addView(posBox);
+            relativeLayout.addView(cardView);
+            relativeLayout.setGravity(RelativeLayout.CENTER_HORIZONTAL);
 
         }
-
 }

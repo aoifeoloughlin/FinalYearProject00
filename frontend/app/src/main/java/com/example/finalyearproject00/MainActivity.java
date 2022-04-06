@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
         });
         Button resources = findViewById(R.id.helpfulResources);
         graphView = (GraphView) findViewById(R.id.graphOfExp);
+        graphView.setHorizontalScrollBarEnabled(true);
+        graphView.getViewport().setScrollable(true);
+        graphView.getViewport().isScrollable();
         try {
             updatePositiveUserInfo();
             updateNegativeUserInfo();
@@ -94,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+            }else{
+                resources.setVisibility(View.INVISIBLE);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -179,9 +184,10 @@ public class MainActivity extends AppCompatActivity {
         JSONArray negExpGraph = new JSONArray(responseBodyNEG);
         PointsGraphSeries<DataPoint> seriesNeg = new PointsGraphSeries<>(getNegPoints(negExpGraph));
         graphView.setTitle("Positive and Negative Experiences");
-        graphView.setTitleColor(R.color.purple_200);
-        graphView.setTitleTextSize(30);
+        graphView.setTitleColor(R.color.black);
+        graphView.setTitleTextSize(40);
         graphView.addSeries(seriesPos);
+        graphView.setHorizontalScrollBarEnabled(true);
         seriesPos.setSize(20);
         seriesPos.setShape(PointsGraphSeries.Shape.POINT);
         graphView.addSeries(seriesNeg);

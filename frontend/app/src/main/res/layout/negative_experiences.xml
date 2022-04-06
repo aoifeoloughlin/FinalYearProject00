@@ -24,20 +24,20 @@
         android:textColor="#E54B4B" />
 
 
-    <EditText
-        android:id="@+id/NegativeExp01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/NegativePageTitle"
-        android:layout_marginLeft="70dp"
-        android:layout_marginBottom="-145dp"
-        android:inputType="textAutoCorrect"
-        android:textColor="@color/black"
-        android:text="Negative Experience Input"
-        android:minHeight="45dp"
-        tools:ignore="SpeakableTextPresentCheck">
-
-    </EditText>
+        <EditText
+            android:id="@+id/NegativeExp01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/NegativePageTitle"
+            android:layout_marginLeft="70dp"
+            android:layout_marginBottom="-145dp"
+            android:inputType="textAutoCorrect"
+            android:minHeight="45dp"
+            android:hint="Negative Experience Input"
+            android:textColor="@color/black"
+            tools:ignore="SpeakableTextPresentCheck">
+            <requestFocus />
+        </EditText>
 
         <Spinner
             android:id="@+id/spinner"
@@ -63,8 +63,7 @@
         android:layout_below="@+id/NegativeExp01"
         android:orientation="vertical"
         android:layout_marginTop="150dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginBottom="-14dp">
+        android:layout_marginLeft="70dp">
     </LinearLayout>
 
 
@@ -112,7 +111,7 @@
 
         <Button
             android:id="@+id/goBackToHome"
-            android:layout_width="62dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/NegativeExp01"
             android:layout_alignParentLeft="true"
@@ -122,7 +121,8 @@
             android:onClick="moveToHomePage"
             android:shape="oval"
             android:textColor="#FFFFFF"
-            android:textSize="18dp" />
+            android:text="Back"
+            android:textSize="13dp" />
         <!--android:drawableEnd="@drawable/icon_right_aero_black"-->
 
     </RelativeLayout>

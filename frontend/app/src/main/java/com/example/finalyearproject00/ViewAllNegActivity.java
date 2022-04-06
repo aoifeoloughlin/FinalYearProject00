@@ -2,15 +2,14 @@ package com.example.finalyearproject00;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.Scroller;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -22,7 +21,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,19 +72,20 @@ public class ViewAllNegActivity extends AppCompatActivity{
             negativeExperienceInfo.add("Positive Experience:\n Description: "+description+"\n Posted: "+datePost
                     +"\n Weight: "+expWeight+"\n");
         }
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rlNeg);
+        LinearLayout relativeLayout = (LinearLayout) findViewById(R.id.rlNeg);
 
         TextView negBox = new TextView(ViewAllNegActivity.this);
-
+        CardView cardView = new CardView(ViewAllNegActivity.this);
         for(int j = 0; j<negativeExperienceInfo.size(); j++){
-            negBox.append("\n "+ (j+1) +"\n");
+            negBox.append("\n \n");
             negBox.append(negativeExperienceInfo.get(j));
         }
-
+        negBox.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         negBox.setVerticalScrollBarEnabled(true);
         negBox.setMovementMethod(new ScrollingMovementMethod());
         negBox.setMaxLines(33);
-        relativeLayout.addView(negBox);
+        cardView.addView(negBox);
+        relativeLayout.addView(cardView);
 
     }
 
